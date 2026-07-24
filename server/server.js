@@ -18,7 +18,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://scale-and-styles-dv7h.vercel.app',
+  credentials: true
+}));
 app.use(express.json());
 
 // Static files — audio files serve godhu
