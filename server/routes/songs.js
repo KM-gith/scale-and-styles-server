@@ -76,7 +76,7 @@ router.put("/:id", protect, adminOnly, async (req, res) => {
 router.delete("/:id", protect, adminOnly, async (req, res) => {
   try {
     await Song.findByIdAndDelete(req.params.id);
-    res.json({ message: "Faarfannaan haaqame." });
+    res.json({ message: "Faarfannaan haqame." });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
