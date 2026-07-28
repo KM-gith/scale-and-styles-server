@@ -1,6 +1,6 @@
 /**
- * Add Style Script — "Special Slow Rock" dabaluuf
- * Fayyadami: node addStyle.js
+ * Add Styles Script — "Shawaa" fi "Special Slow Rock" dabaluuf
+ * Fayyadami: node addStyles.js
  */
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -8,20 +8,24 @@ import Style from "./models/Style.js";
 
 dotenv.config();
 
-async function addStyle() {
+const newStyles = [
+  { name: "Shawaa", color: "#20B2AA" },
+  { name: "Special Slow Rock", color: "#6A5ACD" },
+];
+
+async function addStyles() {
   try {
     await mongoose.connect(process.env.MONGO_URI);
     console.log("MongoDB connected");
 
-    const exists = await Style.findOne({ name: "Special Slow Rock" });
-    if (exists) {
-      console.log('ℹ️  "Special Slow Rock" duraan jira');
-    } else {
-      const style = await Style.create({
-        name: "Special Slow Rock",
-        color: "#6A5ACD",
-      });
-      console.log(`✅ Style haaraa uumame: ${style.name}`);
+    for (const s of newStyles) {
+      const exists = await Style.findOne({ name: s.name });
+      if (exists) {
+        console.log(`ℹ️  "${s.name}" duraan jira`);
+      } else {
+        const style = await Style.create(s);
+        console.log(`✅ Style haaraa uumame: ${style.name}`);
+      }
     }
 
     process.exit(0);
@@ -31,4 +35,4 @@ async function addStyle() {
   }
 }
 
-addStyle();
+addStyles();
