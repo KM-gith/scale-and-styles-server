@@ -12,16 +12,16 @@ const storage = new CloudinaryStorage({
   params: {
     folder: "faarfannoota-audio",
     resource_type: "video", // Cloudinary audio files "video" jalatti bulcha
-    allowed_formats: ["mp3", "wav", "ogg"],
+    allowed_formats: ["mp3", "wav", "ogg", "m4a"],
   },
 });
 
 const fileFilter = (req, file, cb) => {
-  const allowed = ["audio/mpeg", "audio/wav", "audio/ogg", "audio/mp3"];
-  if (allowed.includes(file.mimetype) || file.originalname.match(/\.(mp3|wav|ogg)$/i)) {
+  const allowed = ["audio/mpeg", "audio/wav", "audio/ogg", "audio/mp3", "audio/mp4", "audio/x-m4a", "audio/m4a"];
+  if (allowed.includes(file.mimetype) || file.originalname.match(/\.(mp3|wav|ogg|m4a)$/i)) {
     cb(null, true);
   } else {
-    cb(new Error("Audio files qofa (MP3, WAV, OGG)."), false);
+    cb(new Error("Audio files qofa (MP3, WAV, OGG, M4A)."), false);
   }
 };
 
