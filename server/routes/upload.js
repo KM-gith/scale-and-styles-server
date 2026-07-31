@@ -1,21 +1,18 @@
 import express from "express";
 import multer from "multer";
-import path from "path";
-import { fileURLToPath } from "url";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from "../config/cloudinary.js";
 import { protect, adminOnly } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
-// Multer config — audio files qofa
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../uploads"));
-  },
-  filename: (req, file, cb) => {
-    const unique = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, unique + path.extname(file.originalname));
+// Cloudinary storage — audio files bar-dhaabbaatti (permanent) kaawwata
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "faarfannoota-audio",
+    resource_type: "video", // Cloudinary audio files "video" jalatti bulcha
+    allowed_formats: ["mp3", "wav", "ogg"],
   },
 });
 
@@ -39,10 +36,9 @@ router.post("/audio", protect, adminOnly, upload.single("audio"), (req, res) => 
   if (!req.file) {
     return res.status(400).json({ message: "File hin argamne." });
   }
-  const audioUrl = `/uploads/${req.file.filename}`;
   res.json({
     message: "Upload milkaa'e!",
-    audioUrl,
+    audioUrl: req.file.path, // Cloudinary secure URL — bar-dhaabbaa (kallattiin banama)
     filename: req.file.filename,
     size: req.file.size,
   });

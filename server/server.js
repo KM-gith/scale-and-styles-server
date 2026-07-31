@@ -34,11 +34,15 @@ app.use("/api/styles", styleRoutes);
 app.use("/api/songs", songRoutes);
 app.use("/api/upload", uploadRoutes);
 
-// MongoDB connect
+// MongoDB connect — IPv4 dirqama + timeout gabaabaa
+// (Railway keessatti IPv6 rakkoo silent hang uumuu waan dandeessisuuf)
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI, {
+    family: 4, // IPv4 qofa fayyadami
+    serverSelectionTimeoutMS: 10000, // sekondii 10 booda dhiisi (dogoggora ariitiin argisiisi)
+  })
   .then(() => console.log(" MongoDB connected"))
-  .catch((err) => console.error(" MongoDB error:", err));
+  .catch((err) => console.error(" MongoDB error:", err.message));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
