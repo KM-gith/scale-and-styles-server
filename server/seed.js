@@ -73,8 +73,8 @@ async function seed() {
     if (!exists) {
       await User.create({
         name: "Admin",
-        email: "admin@faarfannoo.com",
-        password: "admin123456",
+        email: "kitesa@gmail.com",
+        password: "1234",
         role: "admin",
       });
       console.log(" Admin user uumame — email: kitesamerga2025@gmail.com | password: 1234");
